@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.15)
 project(gRPC_learning C CXX)
 
+set(CMAKE_CXX_STANDARD 20)
 set(_PROTOBUF_LIBPROTOBUF protobuf)
 set(_REFLECTION grpc++_reflection)
 set(_GRPC_GRPCPP grpc++)
@@ -59,3 +60,6 @@ target_link_libraries(hw_grpc_proto
 find_package(gRPC CONFIG REQUIRED)
 add_executable(main main.cc)
 target_link_libraries(main hw_grpc_proto gRPC::grpc++)
+
+add_executable(multiple_servers multiple_servers.cc)
+target_link_libraries(multiple_servers hw_grpc_proto gRPC::grpc++)
