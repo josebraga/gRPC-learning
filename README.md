@@ -1,30 +1,34 @@
 # Environment
-export MY_INSTALL_DIR=$HOME/workspace/code/grpc/target
-mkdir -p $MY_INSTALL_DIR
-export PATH="$MY_INSTALL_DIR/bin:$PATH"
 
-# Clone gRPC
-git clone --recurse-submodules -b v1.50.0 --depth 1 --shallow-submodules https://github.com/grpc/grpc $HOME/workspace/code/grpc/
-
-# Build gRPC
 ```
-$ cd $HOME/workspace/code/grpc/grpc
-$ mkdir -p cmake/build
-$ pushd cmake/build
-$ cmake -DgRPC_INSTALL=ON \
+export GRPC_INSTALL_DIR=<select path>
+mkdir -p $GRPC_INSTALL_DIR
+export PATH="$GRPC_INSTALL_DIR/bin:$PATH"
+```
+
+# Clone and build gRPC dependency
+
+```
+git clone --recurse-submodules -b v1.50.0 --depth 1 \
+  --shallow-submodules https://github.com/grpc/grpc
+
+cd grpc
+mkdir -p cmake/build
+pushd cmake/build
+cmake -DgRPC_INSTALL=ON \
       -DgRPC_BUILD_TESTS=OFF \
-      -DCMAKE_INSTALL_PREFIX=$MY_INSTALL_DIR \
+      -DCMAKE_INSTALL_PREFIX=$GRPC_INSTALL_DIR \
       ../..
-$ make -j 4
-$ make install
-$ popd
+make -j
+make install
+popd
 ```
 
-# Build my example
+# Build code example
 ```
-$ cd $HOME/workspace/code/grpc/gRPC-learning
-$ mkdir -p build
-$ pushd build
-$ cmake -DCMAKE_PREFIX_PATH=$MY_INSTALL_DIR ..
-$ make -j 4
+mkdir -p build
+pushd build
+cmake -DCMAKE_PREFIX_PATH=$GRPC_INSTALL_DIR ..
+make -j
+popd
 ```
